@@ -1,0 +1,41 @@
+version: '3.7'
+services:
+  calibre:
+    image: linuxserver/calibre:latest
+    container_name: calibre
+    hostname: calibre
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../Data/books:/books
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - GUAC_USER=calibre
+      - GUAC_PASS=5f4dcc3b5aa765d61d8327deb882cf99
+  calibre-web:
+    image: linuxserver/calibre-web:latest
+    container_name: calibre-web
+    hostname: calibre-web
+    restart: unless-stopped
+    volumes:
+      - ../Data/config:/config
+      - ../Data/books:/books
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - DOCKER_MODS=linuxserver/calibre-web:calibre
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    hostname: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../Config/nginx.conf:/etc/nginx/nginx.conf
+      - ../Data/nginx:/etc/ssl/private
