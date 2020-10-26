@@ -28,14 +28,13 @@ services:
       - PGID=1000
       - TZ=America/Chicago
       - DOCKER_MODS=linuxserver/calibre-web:calibre
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    hostname: nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ../Config/nginx.conf:/etc/nginx/nginx.conf
-      - ../Data/nginx:/etc/ssl/private
+    labels:
+      # Traefik Labels
+      - "traefik.enable=true"
+      # HTTPS Labels
+      - "traefik.http.routers.calibre-web.rule=Host(`localhost`)"
+      - "traefik.http.routers.calibre-web.entrypoints=web-secure"
+      - "traefik.http.routers.calibre-web.middlewares=default-headers@file"
+      - "traefik.http.routers.calibre-web.service=calibre-web"
+      - "traefik.http.routers.calibre-web.tls=true"
+      - "traefik.http.services.calibre-web.loadbalancer.server.port=8083"

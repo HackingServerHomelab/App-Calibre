@@ -3,6 +3,7 @@
 ## First Time Prerequisites
 
 1. `rm ./Data/books/.gitkeep`
+2. Run [Traefik](https://github.com/mattlombana/App-Traefik)
 
 ## Running the Containers
 
@@ -11,8 +12,8 @@
     * `../Data/books:/books`
 2. Update the `GUAC_USER` and `GUAC_PASS` variables in [docker-compose.yml](./Docker/docker-compose.yml)
     * `echo -n password | openssl md5`
-2. Update the `CHANGEME-PROXYDOMAINNAME` value in [nginx.conf](./Config/nginx.conf)
-3. `./Config/gen_certs.sh`
+3. Update the Traefik host label in [docker-compose.yml](./Docker/docker-compose.yml)
+    * ``"traefik.http.routers.calibre-web.rule=Host(`localhost`)"``
 4. `docker-compose -f ./Docker/docker-compose.yml up -d`
 
 
