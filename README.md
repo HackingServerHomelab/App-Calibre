@@ -20,7 +20,7 @@
 ### Server
 
 1. Visit `http://<your-ip>:8080`
-2. Set `/books` as the calibre library location
+2. Set `/config/Calibre Library` as the calibre library location
 3. Continue stepping through the wizard
 
 
